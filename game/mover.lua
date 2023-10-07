@@ -1,4 +1,4 @@
-require "vector"
+require "game.vector"
 
 Mover = {}
 Mover.__index = Mover
@@ -56,3 +56,4 @@ function Mover:checkBoundaries()
         self.velocity.y = -1 * self.velocity.y
     end
 end
+

@@ -1,4 +1,4 @@
-require "vector"
+require "game.vector"
 
 function rectCircleCollision(rect, circle)
     local distance = {}

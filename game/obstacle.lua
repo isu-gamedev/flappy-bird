@@ -24,9 +24,3 @@ function Obstacle:draw(offset)
         love.graphics.rectangle("line", offsetLocation.x, offsetLocation.y, self.parts[i].width, self.parts[i].height)
     end
 end
-
-
-function Obstacle:contains(mover)
-    return (mover.location.x + mover.size >= self.location.x) and
-    (mover.location.x - mover.size <= self.location.x + self.width)
-end
