@@ -7,10 +7,9 @@ PauseMenu.__index = PauseMenu
 setmetatable(PauseMenu, Menu)
 
 function PauseMenu:create()
-    -- local menu = Menu:create({MenuItem:create("Continue"),
-    -- MenuItem:create("Restart")})
     local menu = Menu:create({MenuItem:create("Continue", continue),
-    MenuItem:create("Restart", start)})
+    MenuItem:create("Restart", start),
+    MenuItem:create("Quit", quit)})
     setmetatable(menu, PauseMenu)
     return menu
 end

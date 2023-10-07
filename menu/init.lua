@@ -1,2 +1,2 @@
 require "menu.menu-item"
-require "menu.menu-screen"
+require "menu.pause-menu"

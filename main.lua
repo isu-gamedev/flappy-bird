@@ -69,6 +69,9 @@ function start()
     timePassed = 0
 end
 
+function quit()
+    love.event.quit(0)
+end
 
 function changeState(newState, paused)
     if not paused then
@@ -76,5 +79,6 @@ function changeState(newState, paused)
     end
     currState = newState
 end
+
 
 -- TODO: win / loss
