@@ -7,15 +7,18 @@ function love.load()
     height = love.graphics.getHeight()
 
     pauseMenu = PauseMenu:create()
-
+    gameOverMenu = nil
     start()
 end
 
 function love.update(dt)
     timePassed = timePassed + dt
     if currState == "game" then
-        gameScreen:update(dt)
-    elseif currState == "gameStart" then
+        if not gameScreen:update(dt) then
+            currState = "gameOver"
+            gameOverMenu = LossMenu:create(gameScreen.score)
+        end
+    elseif prePaused == "gameStart" then
         gameScreen:updateIdle(dt, timePassed)
     end
 end
@@ -25,6 +28,8 @@ function love.draw()
     gameScreen:draw()
     if currState == "paused" then
         pauseMenu:draw()
+    elseif currState == "gameOver" then
+        gameOverMenu:draw()
     end
 end
 
@@ -36,6 +41,11 @@ function love.keypressed(key, scancode)
         end
     elseif currState == "paused" then
         func = pauseMenu:keypressed(key, scancode) 
+        if func then
+            func()
+        end
+    elseif currState == "gameOver" then
+        func = gameOverMenu:keypressed(key, scancode) 
         if func then
             func()
         end
@@ -79,6 +89,3 @@ function changeState(newState, paused)
     end
     currState = newState
 end
-
-
--- TODO: win / loss

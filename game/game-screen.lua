@@ -33,6 +33,7 @@ function GameScreen:load()
 end
 
 function GameScreen:update(dt)
+    local returnValue = true
     self.mover.velocity.x = 0.8
     self.mover:applyForce(self.gravity)
     if love.keyboard.isDown("space") and self.spacePressedFor < 0.2 then
@@ -48,6 +49,7 @@ function GameScreen:update(dt)
             for k=1,#self.currentTube.parts do
                 if rectCircleCollision(self.currentTube.parts[k], self.mover) then
                     self.mover.color = {255, 0, 0, 255}
+                    returnValue = false
                     break
                 else
                     self.mover.color = {255, 255, 255, 255}
@@ -69,6 +71,7 @@ function GameScreen:update(dt)
             self.currentTube = currTube                
         end
     end
+    return returnValue
 end
 
 function GameScreen:draw()

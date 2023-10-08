@@ -7,7 +7,7 @@ PauseMenu.__index = PauseMenu
 setmetatable(PauseMenu, Menu)
 
 function PauseMenu:create()
-    local menu = Menu:create({MenuItem:create("Continue", continue),
+    local menu = Menu:create("Pause", {MenuItem:create("Continue", continue),
     MenuItem:create("Restart", start),
     MenuItem:create("Quit", quit)})
     setmetatable(menu, PauseMenu)
@@ -19,5 +19,5 @@ function PauseMenu:draw()
     love.graphics.setColor(0,0,0,0.7)
     love.graphics.rectangle("fill", 0, 0, width, height)
     love.graphics.setColor(r, g, b, a)
-    self:drawItems()
+    self:drawMenu()
 end

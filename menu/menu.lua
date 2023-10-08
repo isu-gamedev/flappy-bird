@@ -3,15 +3,22 @@ require "menu.menu-item"
 Menu = {}
 Menu.__index = Menu
 
-function Menu:create(items)
+function Menu:create(title, items)
     local menu = {}
     setmetatable(menu, Menu)
+    menu.title = title
     menu.betweenItems = 20
     menu.items = items
     menu.y = (height - menu:getHeight()) / 2
     menu.x = (width - menu:getWidth()) / 2
     menu.chosenItem = 1
+    menu.titleFont = love.graphics.newFont("fonts/MartianMono.ttf", 32)
     return menu
+end
+
+function Menu:drawMenu()
+    love.graphics.printf(self.title,self.titleFont, 0, 30, width, "center")
+    self:drawItems()
 end
 
 function Menu:drawItems()
