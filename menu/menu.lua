@@ -1,4 +1,4 @@
-require "menu.menu-item"
+require 'menu.menu-item'
 
 Menu = {}
 Menu.__index = Menu
@@ -12,18 +12,20 @@ function Menu:create(title, items)
     menu.y = (height - menu:getHeight()) / 2
     menu.x = (width - menu:getWidth()) / 2
     menu.chosenItem = 1
-    menu.titleFont = love.graphics.newFont("fonts/MartianMono.ttf", 32)
+    menu.titleFont = love.graphics.newFont('fonts/MartianMono.ttf', 32)
+    menu.changeSound = love.audio.newSource('assets/sounds/change.mp3', 'static')
+    menu.changeSound:setVolume(0.3)
     return menu
 end
 
 function Menu:drawMenu()
-    love.graphics.printf(self.title,self.titleFont, 0, 30, width, "center")
+    love.graphics.printf(self.title, self.titleFont, 0, 30, width, 'center')
     self:drawItems()
 end
 
 function Menu:drawItems()
     for n, i in ipairs(self.items) do
-        local added = (i.height + self.betweenItems )* (n - 1)
+        local added = (i.height + self.betweenItems) * (n - 1)
         local chosen = n == self.chosenItem
         i:draw(self.x, self.y + added, chosen)
     end
@@ -45,16 +47,29 @@ function Menu:getWidth()
 end
 
 function Menu:keypressed(key, scancode)
-    if key == "up" then
+    if key == 'up' then
+        if self.changeSound:isPlaying() then
+            self.changeSound:stop()
+        end
+        self.changeSound:play()
         if self.chosenItem > 1 then
-            self.chosenItem = self.chosenItem - 1            
+            self.chosenItem = self.chosenItem - 1
         end
-    elseif key == "down" then
+    elseif key == 'down' then
+        if self.changeSound:isPlaying() then
+            self.changeSound:stop()
+        end
+        self.changeSound:play()
         if self.chosenItem < #self.items then
-            self.chosenItem = self.chosenItem + 1         
+            self.chosenItem = self.chosenItem + 1
         end
-    elseif key == "return" then
-        return self.items[self.chosenItem].func
+    elseif key == 'space' then
+        local chosenItem = self.items[self.chosenItem]
+        if chosenItem.sound:isPlaying() then
+            chosenItem.sound:stop()
+        end
+        chosenItem.sound:play()
+        return chosenItem.func
     end
 end
 
